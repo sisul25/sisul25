@@ -612,7 +612,7 @@
             </div>
         </div>
     </div>
-    <script type="module">
+    <script>
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import { getDatabase, ref, set, get, onValue, push } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
@@ -1229,12 +1229,14 @@ set(ref(window.firebaseDB, `evaluations/${newKey}`), evaluationData)
     alert('제출 중 문제가 발생했어요. 다시 시도해주세요!');
   });
 
+/*
     // Firebase에 저장
     const database = window.firebaseDB;
     const evaluationsRef = ref(database, 'evaluations');
     const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 set(ref(database, `evaluations/${newKey}`), evaluationData);
-    
+*/
+
     if (!allEvaluations) {
         allEvaluations = [];
     }
