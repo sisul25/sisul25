@@ -377,6 +377,28 @@
             gap: 15px;
         }
     </style>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getDatabase, ref, set, onValue, push } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA4SN4u7yc3CZNWuLyt46F_vJG6NXX99v4",
+  authDomain: "sisul2025.firebaseapp.com",
+  databaseURL: "https://sisul2025-default-rtdb.firebaseio.com/",
+  projectId: "sisul2025",
+  storageBucket: "sisul2025.firebasestorage.app",
+  messagingSenderId: "154501251209",
+  appId: "1:154501251209:web:dd814133449122e582c658"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+window.firebaseDB = database;
+window.firebaseRef = ref;
+window.firebaseSet = set;
+window.firebaseOnValue = onValue;
+window.firebasePush = push;
+</script>
 </head>
 <body>
     <div class="container">
@@ -612,29 +634,7 @@
             </div>
         </div>
     </div>
-<script type="module">
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyA4SN4u7yc3CZNWuLyt46F_vJG6NXX99v4",
-  authDomain: "sisul2025.firebaseapp.com",
-  databaseURL: "https://sisul2025-default-rtdb.firebaseio.com/", // 이 줄 추가 필요
-  projectId: "sisul2025",
-  storageBucket: "sisul2025.firebasestorage.app",
-  messagingSenderId: "154501251209",
-  appId: "1:154501251209:web:dd814133449122e582c658"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-
-// 전역 변수로 설정
-window.firebaseDB = database;
-</script>
     <script>
         // 기본 데이터 설정
         const departments = [
@@ -767,19 +767,12 @@ window.firebaseDB = database;
             }
         }
         
-       
-        
-            // DOM 로드 후 이벤트 리스너 등록
-document.addEventListener('DOMContentLoaded', function() {
-    // 관리자 모드 확인
-    checkAdminMode();
-    
-    // Firebase 데이터 로드
-    if (window.firebaseDB) {
-        loadFirebaseData();
-    }
-    
-    document.getElementById('evaluatorType').addEventListener('change', updateDepartmentOptions);
+        // DOM 로드 후 이벤트 리스너 등록
+        document.addEventListener('DOMContentLoaded', function() {
+            // 관리자 모드 확인
+            checkAdminMode();
+            
+            document.getElementById('evaluatorType').addEventListener('change', updateDepartmentOptions);
             
             const scoreInputs = ['creativity', 'difficulty', 'effectiveness', 'spreadability', 'contribution'];
             scoreInputs.forEach(id => {
@@ -815,41 +808,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         function updateDepartmentOptions() {
-    const type = document.getElementById('evaluatorType').value;
-    const executiveNameGroup = document.getElementById('executiveNameGroup');
-    const employeeNameGroup = document.getElementById('employeeNameGroup');
-    const employeeDeptGroup = document.getElementById('employeeDeptGroup');
-    const deptSelect = document.getElementById('evaluatorDept');
-    const positionSelect = document.getElementById('evaluatorPosition');
-    const nameInput = document.getElementById('evaluatorName');
-    
-    // 요소가 존재하는지 확인
-    if (!executiveNameGroup || !employeeNameGroup || !employeeDeptGroup || !deptSelect || !positionSelect || !nameInput) {
-        return;
-    }
-    
-    executiveNameGroup.style.display = 'none';
-    employeeNameGroup.style.display = 'none';
-    employeeDeptGroup.style.display = 'none';
-    
-    deptSelect.innerHTML = '<option value="">선택하세요</option>';
-    positionSelect.value = '';
-    nameInput.value = '';
-    
-    if (type === 'executive') {
-        executiveNameGroup.style.display = 'block';
-    } else if (type === 'employee') {
-        employeeNameGroup.style.display = 'block';
-        employeeDeptGroup.style.display = 'block';
-        
-        allDepartments.forEach(dept => {
-            const option = document.createElement('option');
-            option.value = dept;
-            option.textContent = dept;
-            deptSelect.appendChild(option);
-        });
-    }
-}
+            const type = document.getElementById('evaluatorType').value;
+            const executiveNameGroup = document.getElementById('executiveNameGroup');
+            const employeeNameGroup = document.getElementById('employeeNameGroup');
+            const employeeDeptGroup = document.getElementById('employeeDeptGroup');
+            const deptSelect = document.getElementById('evaluatorDept');
+            
+            executiveNameGroup.style.display = 'none';
+            employeeNameGroup.style.display = 'none';
+            employeeDeptGroup.style.display = 'none';
+            
+            deptSelect.innerHTML = '<option value="">선택하세요</option>';
+            document.getElementById('evaluatorPosition').value = '';
+            document.getElementById('evaluatorName').value = '';
+            
+            if (type === 'executive') {
+                executiveNameGroup.style.display = 'block';
+            } else if (type === 'employee') {
+                employeeNameGroup.style.display = 'block';
+                employeeDeptGroup.style.display = 'block';
+                
+                allDepartments.forEach(dept => {
+                    const option = document.createElement('option');
+                    option.value = dept;
+                    option.textContent = dept;
+                    deptSelect.appendChild(option);
+                });
+            }
+        }
         
         function showSection(sectionName) {
             // 평가자 모드에서 관리자 탭 접근 시도 시 차단
@@ -1213,45 +1199,45 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         function finalSubmission() {
-    const evaluationData = {
-        evaluator: currentEvaluator,
-        evaluations: evaluations,
-        timestamp: new Date().toISOString()
-    };
-    
-    // Firebase에 저장
-    const database = window.firebaseDB;
-    const evaluationsRef = ref(database, 'evaluations');
-    const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-set(ref(database, `evaluations/${newKey}`), evaluationData);
-    
-    if (!allEvaluations) {
-        allEvaluations = [];
-    }
-    allEvaluations.push(evaluationData);
-    
-    // 완료된 평가자 목록에 추가
-    const evaluatorKey = currentEvaluator.type === 'executive' ? 
-        currentEvaluator.dept : 
-        `${currentEvaluator.name}_${currentEvaluator.dept}`;
-    completedEvaluators.push(evaluatorKey);
-    
-    // 모든 섹션 숨기기
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active');
-    });
-    
-    // 감사 화면만 표시
-    document.getElementById('thankYouScreen').classList.add('active');
-    
-    // 변수 초기화
-    currentEvaluator = null;
-    currentPage = 0;
-    evaluations = [];
-    
-    // 평가자 입력 폼도 초기화
-    resetEvaluatorForm();
+            const evaluationData = {
+                evaluator: currentEvaluator,
+                evaluations: evaluations,
+                timestamp: new Date().toISOString()
+            };
+            
+            
+    if (window.firebaseDB) {
+    const evaluationsRef = window.firebaseRef(window.firebaseDB, 'evaluations');
+    window.firebasePush(evaluationsRef, evaluationData);
 }
+
+            if (!allEvaluations) {
+                allEvaluations = [];
+            }
+            allEvaluations.push(evaluationData);
+            
+            // 완료된 평가자 목록에 추가
+            const evaluatorKey = currentEvaluator.type === 'executive' ? 
+                currentEvaluator.dept : 
+                `${currentEvaluator.name}_${currentEvaluator.dept}`;
+            completedEvaluators.push(evaluatorKey);
+            
+            // 모든 섹션 숨기기
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // 감사 화면만 표시
+            document.getElementById('thankYouScreen').classList.add('active');
+            
+            // 변수 초기화
+            currentEvaluator = null;
+            currentPage = 0;
+            evaluations = [];
+            
+            // 평가자 입력 폼도 초기화
+            resetEvaluatorForm();
+        }
         
         function resetEvaluatorForm() {
             // 평가자 정보 입력 폼 초기화
@@ -1299,9 +1285,6 @@ set(ref(database, `evaluations/${newKey}`), evaluationData);
             updateDepartmentOptions();
         }
         
-       // 관리자 모드에서 Firebase 데이터 로드
-
-
         function refreshStatus() {
             updateExecutiveStatus();
             updateEmployeeStatus();
@@ -1323,34 +1306,6 @@ set(ref(database, `evaluations/${newKey}`), evaluationData);
             });
         }
         
-function loadFirebaseData() {
-    const database = window.firebaseDB;
-    const evaluationsRef = ref(database, 'evaluations');
-    
-    onValue(evaluationsRef, (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            allEvaluations = Object.values(data);
-            // 완료된 평가자 목록 재구성
-            completedEvaluators = [];
-            allEvaluations.forEach(evalData => {
-                const evaluatorKey = evalData.evaluator.type === 'executive' ? 
-                    evalData.evaluator.dept : 
-                    `${evalData.evaluator.name}_${evalData.evaluator.dept}`;
-                completedEvaluators.push(evaluatorKey);
-            });
-        } else {
-            allEvaluations = [];
-            completedEvaluators = [];
-        }
-        
-        // 관리자 화면 업데이트
-        if (isAdminMode) {
-            refreshStatus();
-        }
-    });
-}
-
         function updateEmployeeStatus() {
             const container = document.getElementById('employeeStatus');
             container.innerHTML = '';
@@ -1678,19 +1633,14 @@ function loadFirebaseData() {
         }
         
         async function resetAllData() {
-    const result = await showConfirm('모든 평가 데이터를 삭제하시겠습니까?');
-    if (result) {
-        // Firebase에서 삭제
-        const database = window.firebaseDB;
-        const evaluationsRef = ref(database, 'evaluations');
-        set(evaluationsRef, null);
-        
-        allEvaluations = [];
-        completedEvaluators = [];
-        showAlert('모든 데이터가 초기화되었습니다.');
-        refreshStatus();
-    }
-}
+            const result = await showConfirm('모든 평가 데이터를 삭제하시겠습니까?');
+            if (result) {
+                allEvaluations = [];
+                completedEvaluators = [];
+                showAlert('모든 데이터가 초기화되었습니다.');
+                refreshStatus();
+            }
+        }
         
         function showDeleteEvaluator() {
             const deleteSection = document.getElementById('deleteSection');
