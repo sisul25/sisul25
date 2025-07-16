@@ -772,6 +772,9 @@ window.firebasePush = push;
             // 관리자 모드 확인
             checkAdminMode();
             
+            if (window.firebaseDB) {
+        loadFirebaseData();
+    }
             document.getElementById('evaluatorType').addEventListener('change', updateDepartmentOptions);
             
             const scoreInputs = ['creativity', 'difficulty', 'effectiveness', 'spreadability', 'contribution'];
@@ -942,6 +945,31 @@ window.firebasePush = push;
             }
         }
         
+        function loadFirebaseData() {
+    if (!window.firebaseDB) return;
+    
+    const evaluationsRef = window.firebaseRef(window.firebaseDB, 'evaluations');
+    window.firebaseOnValue(evaluationsRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            allEvaluations = Object.values(data);
+            // 완료된 평가자 목록 재구성
+            completedEvaluators = [];
+            allEvaluations.forEach(evalData => {
+                const evaluatorKey = evalData.evaluator.type === 'executive' ? 
+                    evalData.evaluator.dept : 
+                    `${evalData.evaluator.name}_${evalData.evaluator.dept}`;
+                completedEvaluators.push(evaluatorKey);
+            });
+        }
+        
+        // 관리자 화면 업데이트
+        if (isAdminMode) {
+            refreshStatus();
+        }
+    });
+}
+
         function startEvaluation() {
             const type = document.getElementById('evaluatorType').value;
             let name, dept;
