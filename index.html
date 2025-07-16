@@ -3,14 +3,1756 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Pages 테스트</title>
+    <title>2025년도 상반기 서시공 어워드 우수과제 평가</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #6c757d;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tab.active {
+            background: #007bff;
+            color: white;
+        }
+        
+        .nav-tab:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+        
+        .nav-tab.active:hover {
+            background: #0056b3;
+            color: white;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group select:focus, .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #1e7e34;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .evaluation-form {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .evaluation-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .evaluation-item label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0;
+        }
+        
+        .evaluation-item input {
+            width: 120px;
+            text-align: center;
+            margin-left: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 15px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .pagination span {
+            margin: 0 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #007bff;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .result-card h3 {
+            color: #007bff;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .score-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .score-detail:last-child {
+            border-bottom: none;
+        }
+        
+        .final-score {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #28a745;
+            text-align: center;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .status-card {
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .status-complete {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-incomplete {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .evaluation-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border-radius: 15px;
+        }
+        
+        .evaluation-header h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .evaluation-header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        /* 커스텀 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .modal-content p {
+            margin-bottom: 25px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+    </style>
 </head>
 <body>
-    <h1>GitHub Pages 테스트</h1>
-    <p>현재 시간: <span id="time"></span></p>
-    
+    <div class="container">
+        <div class="header">
+            <h1>2025년도 상반기 서시공 어워드 우수과제 평가</h1>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('evaluator')">평가 참여</button>
+            <button class="nav-tab admin-only" onclick="showSection('admin')" style="display: none;">관리자 모니터링</button>
+            <button class="nav-tab admin-only" onclick="showSection('results')" style="display: none;">결과 확인</button>
+        </div>
+        
+        <div class="content">
+            <!-- 평가자 입장 -->
+            <div id="evaluator" class="section active">
+                <div class="alert alert-info" style="margin-bottom: 30px; font-size: 1.1em; line-height: 1.8;">
+                    <h3 style="color: #0c5460; margin-bottom: 20px; text-align: center;">
+                        🏆 2025년 상반기 서시공 어워드 평가 안내 🏆
+                    </h3>
+                    <p style="margin-bottom: 15px;">
+                        <strong>2025년 상반기 서시공 어워드에 참여해주신 임직원 여러분 모두 감사합니다.</strong>
+                    </p>
+                    <p style="margin-bottom: 15px;">
+                        오늘 행사를 통해 잠시나마 무더위를 잊고 편안하고 즐겁게 쉬어가는 하루 보내셨으면 좋겠습니다.
+                    </p>
+                    <p style="margin-bottom: 15px;">
+                        사전심사를 통해 선발된 <strong>우수과제 8건</strong>에 대한 발표를 경청해주시고,<br>
+                        공정한 시각으로 평가에 참여해주시기를 부탁드립니다.
+                    </p>
+                    <p style="margin-bottom: 15px;">
+                        해당 평가시스템은 AI 어시스턴트 '<strong>클로드</strong>'를 활용하여 만든 평가 프로그램으로,<br>
+                        보다 신속하고 정확한 점수집계를 위해 제작하였습니다^^
+                    </p>
+                    <p style="margin-bottom: 15px;">
+                        평가 도중 문의사항이 있는 경우, 근처의 <strong>기획조정실 직원</strong>에게 문의해주시기 바랍니다.
+                    </p>
+                    <p style="text-align: center; font-size: 1.2em; color: #0c5460; font-weight: bold; margin-bottom: 0;">
+                        그럼 이제 평가를 시작해볼까요^^?
+                    </p>
+                </div>
+                
+                <div id="evaluatorLogin" class="evaluation-form">
+                    <h2>평가자 정보 입력</h2>
+                    <div class="form-group">
+                        <label for="evaluatorType">평가자 구분</label>
+                        <select id="evaluatorType">
+                            <option value="">선택하세요</option>
+                            <option value="executive">임원</option>
+                            <option value="employee">직원</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="executiveNameGroup" style="display: none;">
+                        <label for="evaluatorPosition">직위</label>
+                        <select id="evaluatorPosition">
+                            <option value="">선택하세요</option>
+                            <option value="이사장">이사장</option>
+                            <option value="경영전략본부장">경영전략본부장</option>
+                            <option value="복지경제본부장">복지경제본부장</option>
+                            <option value="문화체육본부장">문화체육본부장</option>
+                            <option value="도로관리본부장">도로관리본부장</option>
+                            <option value="시설안전본부장">시설안전본부장</option>
+                            <option value="교통사업본부장">교통사업본부장</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="employeeNameGroup" style="display: none;">
+                        <label for="evaluatorName">성명</label>
+                        <input type="text" id="evaluatorName" placeholder="성명을 입력하세요">
+                    </div>
+                    
+                    <div class="form-group" id="employeeDeptGroup" style="display: none;">
+                        <label for="evaluatorDept">소속</label>
+                        <select id="evaluatorDept">
+                            <option value="">선택하세요</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="startEvaluation()">평가 시작</button>
+                </div>
+                
+                <div id="evaluationArea" class="hidden">
+                    <div class="evaluation-header">
+                        <h2 id="currentDeptName"></h2>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    
+                    <div class="evaluation-form">
+                        <div class="evaluation-item">
+                            <label>창의성 (18~30점)</label>
+                            <input type="number" id="creativity" min="18" max="30" placeholder="18~30" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onpaste="return false;" ondrop="return false;">
+                        </div>
+                        
+                        <div class="evaluation-item">
+                            <label>난이도 (18~30점)</label>
+                            <input type="number" id="difficulty" min="18" max="30" placeholder="18~30" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onpaste="return false;" ondrop="return false;">
+                        </div>
+                        
+                        <div class="evaluation-item">
+                            <label>효과성 (12~20점)</label>
+                            <input type="number" id="effectiveness" min="12" max="20" placeholder="12~20" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onpaste="return false;" ondrop="return false;">
+                        </div>
+                        
+                        <div class="evaluation-item">
+                            <label>전파성 (6~10점)</label>
+                            <input type="number" id="spreadability" min="6" max="10" placeholder="6~10" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onpaste="return false;" ondrop="return false;">
+                        </div>
+                        
+                        <div class="evaluation-item">
+                            <label>기여도 (6~10점)</label>
+                            <input type="number" id="contribution" min="6" max="10" placeholder="6~10" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onpaste="return false;" ondrop="return false;">
+                        </div>
+                        
+                        <div class="evaluation-item">
+                            <label>총점</label>
+                            <input type="text" id="totalScore" readonly placeholder="총점">
+                        </div>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button class="btn btn-primary" onclick="previousEvaluation()" id="prevBtn">이전</button>
+                        <span id="pageInfo">1 / 8</span>
+                        <button class="btn btn-primary" onclick="nextEvaluation()" id="nextBtn">다음</button>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="btn btn-success" onclick="showPreview()" id="submitBtn" style="display: none;">평가 완료</button>
+                    </div>
+                </div>
+                
+                <!-- 미리보기 페이지 -->
+                <div id="previewArea" class="hidden">
+                    <div class="evaluation-header">
+                        <h2>📋 평가 결과 미리보기</h2>
+                        <p>제출하기 전에 평가 내용을 최종 확인해주세요</p>
+                    </div>
+                    
+                    <div id="previewContent" class="evaluation-form">
+                        <!-- 미리보기 내용이 여기에 동적으로 생성됩니다 -->
+                    </div>
+                    
+                    <div class="pagination">
+                        <button class="btn btn-primary" onclick="returnToEvaluation()">수정하기</button>
+                        <button class="btn btn-success" onclick="finalSubmission()">최종 제출</button>
+                    </div>
+                </div>
+                
+                <!-- 감사 메시지 화면 -->
+                <div id="thankYouArea" class="hidden">
+                    <div style="display: flex; align-items: center; justify-content: center; min-height: 70vh;">
+                        <h1 style="font-size: 2.5em; color: #333;">평가에 참여해주셔서 감사합니다^^</h1>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 관리자 입장 -->
+            <div id="admin" class="section">
+                <h2>평가 현황 모니터링</h2>
+                
+                <div class="alert alert-info">
+                    <strong>현재 평가 현황:</strong> 실시간으로 각 부서별 평가 완료 상태를 확인할 수 있습니다.
+                </div>
+                
+                <div class="form-group">
+                    <button class="btn btn-primary" onclick="refreshStatus()">상태 새로고침</button>
+                    <button class="btn btn-success" onclick="exportResults()">결과 내보내기</button>
+                    <button class="btn btn-danger" onclick="showDeleteEvaluator()">데이터 삭제</button>
+                    <button class="btn btn-danger" onclick="resetAllData()">전체 초기화</button>
+                </div>
+                
+                <!-- 개별 삭제 영역 -->
+                <div id="deleteSection" class="hidden" style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h4 style="margin-bottom: 15px;">개별 평가자 삭제</h4>
+                    <div class="form-group">
+                        <label for="deleteEvaluatorSelect">삭제할 평가자 선택</label>
+                        <select id="deleteEvaluatorSelect" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
+                            <option value="">선택하세요</option>
+                        </select>
+                    </div>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <button class="btn btn-primary" onclick="hideDeleteEvaluator()">취소</button>
+                        <button class="btn btn-danger" onclick="deleteSelectedEvaluator()">삭제</button>
+                    </div>
+                </div>
+                
+                <h3>임원 평가 현황</h3>
+                <div id="executiveStatus" class="status-grid"></div>
+                
+                <h3>직원 평가 현황</h3>
+                <div id="employeeStatus" class="status-grid"></div>
+            </div>
+            
+            <!-- 결과 확인 -->
+            <div id="results" class="section">
+                <h2>평가 결과</h2>
+                
+                <div class="form-group">
+                    <button class="btn btn-success" onclick="showFinalRanking()">최종 순위</button>
+                    <button class="btn btn-primary" onclick="calculateResults()">결과 계산</button>
+                </div>
+                
+                <div id="resultsArea" class="results-grid">
+                    <div style="display: flex; align-items: center; justify-content: center; min-height: 40vh; text-align: center;">
+                        <div>
+                            <h3 style="color: #666; margin-bottom: 20px;">📊 평가 결과를 확인하시려면</h3>
+                            <p style="font-size: 1.2em; color: #999;">위의 '결과 계산' 버튼을 클릭해주세요.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 평가 완료 화면 -->
+            <div id="thankYouScreen" class="section">
+                <div style="display: flex; align-items: center; justify-content: center; min-height: 70vh;">
+                    <h1 style="font-size: 3em; color: #28a745; text-align: center;">평가에 참여해주셔서 감사합니다^^</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 커스텀 모달 -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">알림</h3>
+            <p id="modalMessage"></p>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" id="modalConfirm">확인</button>
+                <button class="btn btn-danger" id="modalCancel" style="display: none;">취소</button>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getDatabase, ref, set, get, onValue, push } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyA4SN4u7yc3CZNWuLyt46F_vJG6NXX99v4",
+  authDomain: "sisul2025.firebaseapp.com",
+  databaseURL: "https://sisul2025-default-rtdb.firebaseio.com/", // 이 줄 추가 필요
+  projectId: "sisul2025",
+  storageBucket: "sisul2025.firebasestorage.app",
+  messagingSenderId: "154501251209",
+  appId: "1:154501251209:web:dd814133449122e582c658"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+// 전역 변수로 설정
+window.firebaseDB = database;
+</script>
     <script>
-        document.getElementById('time').textContent = new Date().toLocaleString('ko-KR');
+        // 기본 데이터 설정
+        const departments = [
+            'IT전략실', '장애인콜택시운영처', '서울어린이대공원', '청계천관리처', 
+            '자산관리혁신처', '공사감독1처', '주차시설운영처', '공공자전거운영처'
+        ];
+        
+        const allDepartments = [
+            '감사실', '안전처', '기획조정실', '인사노무처', '총무처', '홍보실', '인재문화원', 'IT전략실',
+            '상가운영처', '추모시설운영처', '장애인콜택시운영처', '서울월드컵경기장운영처', '돔경기장운영처', 
+            '서울어린이대공원', '청계천관리처', '남산곤돌라인수단TF', '자산관리혁신처', '도로관리처', 
+            '도로시설처', '도로기전처', '도로환경처', '교통정보처', '공사감독1처', '공사감독2처', 
+            '공사감독3처', '공동구관리처', '상수도지원처', '주차시설운영처', '교통시설운영처', '공공자전거운영처'
+        ];
+        
+        const executives = [
+            { name: '이사장', dept: '이사장', cannotEvaluate: [] },
+            { name: '경영전략본부장', dept: '경영전략본부', cannotEvaluate: ['기획조정실', '인사노무처', '총무처', '홍보실', '인재문화원', 'IT전략실'] },
+            { name: '복지경제본부장', dept: '복지경제본부', cannotEvaluate: ['상가운영처', '추모시설운영처', '장애인콜택시운영처'] },
+            { name: '문화체육본부장', dept: '문화체육본부', cannotEvaluate: ['서울월드컵경기장운영처', '돔경기장운영처', '서울어린이대공원', '청계천관리처', '남산곤돌라인수단TF'] },
+            { name: '도로관리본부장', dept: '도로관리본부', cannotEvaluate: ['자산관리혁신처', '도로관리처', '도로시설처', '도로기전처', '도로환경처', '교통정보처'] },
+            { name: '시설안전본부장', dept: '시설안전본부', cannotEvaluate: ['공사감독1처', '공사감독2처', '공사감독3처', '공동구관리처', '상수도지원처'] },
+            { name: '교통사업본부장', dept: '교통사업본부', cannotEvaluate: ['주차시설운영처', '교통시설운영처', '공공자전거운영처'] }
+        ];
+        
+        // 전역 변수
+        let currentEvaluator = null;
+        let currentPage = 0;
+        let evaluations = [];
+        let allEvaluations = [];
+        let completedEvaluators = []; // 평가 완료한 평가자 목록
+        let isAdminMode = false; // 관리자 모드 여부
+        let isAdminAuthenticated = false; // 관리자 인증 상태
+        const ADMIN_PASSWORD = 'sisul2025'; // 관리자 비밀번호
+        
+        // 커스텀 알림 및 확인 함수
+        function showAlert(message) {
+            return new Promise((resolve) => {
+                document.getElementById('modalTitle').textContent = '알림';
+                document.getElementById('modalMessage').textContent = message;
+                document.getElementById('modalConfirm').textContent = '확인';
+                document.getElementById('modalCancel').style.display = 'none';
+                document.getElementById('customModal').style.display = 'block';
+                
+                document.getElementById('modalConfirm').onclick = () => {
+                    document.getElementById('customModal').style.display = 'none';
+                    resolve(true);
+                };
+            });
+        }
+        
+        function showConfirm(message) {
+            return new Promise((resolve) => {
+                document.getElementById('modalTitle').textContent = '확인';
+                document.getElementById('modalMessage').textContent = message;
+                document.getElementById('modalConfirm').textContent = '확인';
+                document.getElementById('modalCancel').style.display = 'inline-block';
+                document.getElementById('customModal').style.display = 'block';
+                
+                document.getElementById('modalConfirm').onclick = () => {
+                    document.getElementById('customModal').style.display = 'none';
+                    resolve(true);
+                };
+                
+                document.getElementById('modalCancel').onclick = () => {
+                    document.getElementById('customModal').style.display = 'none';
+                    resolve(false);
+                };
+            });
+        }
+        
+        // 관리자 비밀번호 입력 함수
+        function showPasswordPrompt() {
+            return new Promise((resolve) => {
+                document.getElementById('modalTitle').textContent = '관리자 인증';
+                document.getElementById('modalMessage').innerHTML = `
+                    <p style="margin-bottom: 15px;">관리자 비밀번호를 입력하세요:</p>
+                    <input type="password" id="adminPasswordInput" 
+                           style="width: 100%; padding: 10px; border: 2px solid #e9ecef; border-radius: 5px; font-size: 1em;"
+                           placeholder="비밀번호 입력">
+                `;
+                document.getElementById('modalConfirm').textContent = '확인';
+                document.getElementById('modalCancel').style.display = 'inline-block';
+                document.getElementById('customModal').style.display = 'block';
+                
+                // 입력 필드에 포커스
+                setTimeout(() => {
+                    document.getElementById('adminPasswordInput').focus();
+                }, 100);
+                
+                // Enter 키 처리
+                document.getElementById('adminPasswordInput').onkeypress = (e) => {
+                    if (e.key === 'Enter') {
+                        document.getElementById('modalConfirm').click();
+                    }
+                };
+                
+                document.getElementById('modalConfirm').onclick = () => {
+                    const password = document.getElementById('adminPasswordInput').value;
+                    document.getElementById('customModal').style.display = 'none';
+                    resolve(password);
+                };
+                
+                document.getElementById('modalCancel').onclick = () => {
+                    document.getElementById('customModal').style.display = 'none';
+                    resolve(null);
+                };
+            });
+        }
+        
+        // 페이지 로드 시 관리자 모드 확인
+        function checkAdminMode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            isAdminMode = urlParams.get('admin') === 'true';
+            
+            if (isAdminMode) {
+                // 관리자 탭들을 보이게 함
+                document.querySelectorAll('.admin-only').forEach(element => {
+                    element.style.display = 'inline-block';
+                });
+                
+                // 페이지 제목에 관리자 표시 추가
+                const header = document.querySelector('.header h1');
+                header.textContent += ' - 관리자 모드';
+            } else {
+                // 평가자 모드에서는 관리자 탭 완전히 숨김
+                document.querySelectorAll('.admin-only').forEach(element => {
+                    element.style.display = 'none';
+                });
+            }
+        }
+        
+        // DOM 로드 후 이벤트 리스너 등록
+        document.addEventListener('DOMContentLoaded', function() {
+            // 관리자 모드 확인
+            checkAdminMode();
+            
+// DOM 로드 후 이벤트 리스너 등록
+document.addEventListener('DOMContentLoaded', function() {
+    // 관리자 모드 확인
+    checkAdminMode();
+    
+    // Firebase 데이터 로드
+    if (window.firebaseDB) {
+        loadFirebaseData();
+    }
+    
+    // 나머지 코드는 그대로...
+});
+            document.getElementById('evaluatorType').addEventListener('change', updateDepartmentOptions);
+            
+            const scoreInputs = ['creativity', 'difficulty', 'effectiveness', 'spreadability', 'contribution'];
+            scoreInputs.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', function() {
+                        // 실시간 점수 검증
+                        let min, max;
+                        switch(id) {
+                            case 'creativity':
+                            case 'difficulty':
+                                min = 18; max = 30;
+                                break;
+                            case 'effectiveness':
+                                min = 12; max = 20;
+                                break;
+                            case 'spreadability':
+                            case 'contribution':
+                                min = 6; max = 10;
+                                break;
+                        }
+                        validateScore(this, min, max);
+                        saveCurrentEvaluation();
+                        updateTotalScore();
+                    });
+                }
+            });
+            
+            // 관리자 모드일 때만 상태 새로고침
+            if (isAdminMode) {
+                refreshStatus();
+            }
+        });
+        
+        function updateDepartmentOptions() {
+            const type = document.getElementById('evaluatorType').value;
+            const executiveNameGroup = document.getElementById('executiveNameGroup');
+            const employeeNameGroup = document.getElementById('employeeNameGroup');
+            const employeeDeptGroup = document.getElementById('employeeDeptGroup');
+            const deptSelect = document.getElementById('evaluatorDept');
+            
+            executiveNameGroup.style.display = 'none';
+            employeeNameGroup.style.display = 'none';
+            employeeDeptGroup.style.display = 'none';
+            
+            deptSelect.innerHTML = '<option value="">선택하세요</option>';
+            document.getElementById('evaluatorPosition').value = '';
+            document.getElementById('evaluatorName').value = '';
+            
+            if (type === 'executive') {
+                executiveNameGroup.style.display = 'block';
+            } else if (type === 'employee') {
+                employeeNameGroup.style.display = 'block';
+                employeeDeptGroup.style.display = 'block';
+                
+                allDepartments.forEach(dept => {
+                    const option = document.createElement('option');
+                    option.value = dept;
+                    option.textContent = dept;
+                    deptSelect.appendChild(option);
+                });
+            }
+        }
+        
+        function showSection(sectionName) {
+            // 평가자 모드에서 관리자 탭 접근 시도 시 차단
+            if (!isAdminMode && (sectionName === 'admin' || sectionName === 'results')) {
+                showAlert('접근 권한이 없습니다.');
+                return;
+            }
+            
+            // 관리자 탭 접근 시 비밀번호 확인 (관리자 모드에서만)
+            if (isAdminMode && (sectionName === 'admin' || sectionName === 'results') && !isAdminAuthenticated) {
+                authenticateAdmin(sectionName);
+                return;
+            }
+            
+            // 평가 참여 탭을 클릭했을 때 폼 초기화
+            if (sectionName === 'evaluator') {
+                resetEvaluatorForm();
+            }
+            
+            // 결과 확인 탭을 클릭했을 때 기본 화면으로 초기화
+            if (sectionName === 'results') {
+                resetResultsArea();
+            }
+            
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(sectionName).classList.add('active');
+            event.target.classList.add('active');
+            
+            if (sectionName === 'admin') {
+                refreshStatus();
+            }
+        }
+        
+        // 결과 확인 탭 기본 화면으로 초기화
+        function resetResultsArea() {
+            const resultsArea = document.getElementById('resultsArea');
+            resultsArea.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; min-height: 40vh; text-align: center;">
+                    <div>
+                        <h3 style="color: #666; margin-bottom: 20px;">📊 평가 결과를 확인하시려면</h3>
+                        <p style="font-size: 1.2em; color: #999;">위의 '최종 순위' 또는 '결과 계산' 버튼을 클릭해주세요.</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 관리자 인증 함수
+        async function authenticateAdmin(targetSection) {
+            const password = await showPasswordPrompt();
+            
+            if (password === null) {
+                // 취소된 경우 평가 참여 탭으로 돌아가기
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.querySelectorAll('.nav-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                document.getElementById('evaluator').classList.add('active');
+                document.querySelector('[onclick="showSection(\'evaluator\')"]').classList.add('active');
+                return;
+            }
+            
+            if (password === ADMIN_PASSWORD) {
+                isAdminAuthenticated = true;
+                showAlert('관리자 인증이 완료되었습니다.');
+                
+                // 인증 성공 후 해당 섹션으로 이동
+                setTimeout(() => {
+                    document.querySelectorAll('.section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    document.querySelectorAll('.nav-tab').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    
+                    document.getElementById(targetSection).classList.add('active');
+                    document.querySelector(`[onclick="showSection('${targetSection}')"]`).classList.add('active');
+                    
+                    if (targetSection === 'admin') {
+                        refreshStatus();
+                    }
+                }, 1000);
+            } else {
+                showAlert('비밀번호가 올바르지 않습니다.');
+                
+                // 인증 실패 시 평가 참여 탭으로 돌아가기
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.querySelectorAll('.nav-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                document.getElementById('evaluator').classList.add('active');
+                document.querySelector('[onclick="showSection(\'evaluator\')"]').classList.add('active');
+            }
+        }
+        
+        function startEvaluation() {
+            const type = document.getElementById('evaluatorType').value;
+            let name, dept;
+            
+            if (type === 'executive') {
+                const position = document.getElementById('evaluatorPosition').value;
+                if (!position) {
+                    showAlert('직위를 선택해주세요.');
+                    return;
+                }
+                name = position;
+                dept = position;
+            } else if (type === 'employee') {
+                name = document.getElementById('evaluatorName').value;
+                dept = document.getElementById('evaluatorDept').value;
+                if (!name || !dept) {
+                    showAlert('성명과 소속을 모두 입력해주세요.');
+                    return;
+                }
+            } else {
+                showAlert('평가자 구분을 선택해주세요.');
+                return;
+            }
+            
+            // 중복 평가 체크
+            const evaluatorKey = type === 'executive' ? dept : `${name}_${dept}`;
+            if (completedEvaluators.includes(evaluatorKey)) {
+                showAlert('이미 평가를 완료하셨습니다.\n중복 평가는 불가능합니다.');
+                return;
+            }
+            
+            currentEvaluator = { type, name, dept };
+            
+            let targetDepartments = [...departments];
+            
+            if (type === 'executive') {
+                const executive = executives.find(e => e.name === dept);
+                if (executive) {
+                    targetDepartments = targetDepartments.filter(d => !executive.cannotEvaluate.includes(d));
+                }
+            } else {
+                targetDepartments = targetDepartments.filter(d => d !== dept);
+            }
+            
+            evaluations = targetDepartments.map(dept => ({
+                department: dept,
+                creativity: '',
+                difficulty: '',
+                effectiveness: '',
+                spreadability: '',
+                contribution: '',
+                total: 0
+            }));
+            
+            currentPage = 0;
+            
+            document.getElementById('evaluatorLogin').classList.add('hidden');
+            document.getElementById('evaluationArea').classList.remove('hidden');
+            
+            updateEvaluationPage();
+        }
+        
+        function updateEvaluationPage() {
+            if (evaluations.length === 0) return;
+            
+            const current = evaluations[currentPage];
+            document.getElementById('currentDeptName').textContent = current.department;
+            document.getElementById('creativity').value = current.creativity;
+            document.getElementById('difficulty').value = current.difficulty;
+            document.getElementById('effectiveness').value = current.effectiveness;
+            document.getElementById('spreadability').value = current.spreadability;
+            document.getElementById('contribution').value = current.contribution;
+            
+            updateTotalScore();
+            
+            document.getElementById('pageInfo').textContent = `${currentPage + 1} / ${evaluations.length}`;
+            document.getElementById('prevBtn').style.display = 'inline-block'; // 항상 표시
+            document.getElementById('nextBtn').style.display = currentPage < evaluations.length - 1 ? 'inline-block' : 'none';
+            document.getElementById('submitBtn').style.display = currentPage === evaluations.length - 1 ? 'inline-block' : 'none';
+            
+            const progress = ((currentPage + 1) / evaluations.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+        
+        function saveCurrentEvaluation() {
+            if (evaluations.length === 0) return;
+            
+            const current = evaluations[currentPage];
+            current.creativity = parseInt(document.getElementById('creativity').value) || 0;
+            current.difficulty = parseInt(document.getElementById('difficulty').value) || 0;
+            current.effectiveness = parseInt(document.getElementById('effectiveness').value) || 0;
+            current.spreadability = parseInt(document.getElementById('spreadability').value) || 0;
+            current.contribution = parseInt(document.getElementById('contribution').value) || 0;
+            current.total = current.creativity + current.difficulty + current.effectiveness + current.spreadability + current.contribution;
+        }
+        
+        function updateTotalScore() {
+            const creativity = parseInt(document.getElementById('creativity').value) || 0;
+            const difficulty = parseInt(document.getElementById('difficulty').value) || 0;
+            const effectiveness = parseInt(document.getElementById('effectiveness').value) || 0;
+            const spreadability = parseInt(document.getElementById('spreadability').value) || 0;
+            const contribution = parseInt(document.getElementById('contribution').value) || 0;
+            
+            const total = creativity + difficulty + effectiveness + spreadability + contribution;
+            document.getElementById('totalScore').value = total > 0 ? total : '';
+            
+            // 총점이 100점을 초과하는 경우 경고
+            if (total > 100) {
+                document.getElementById('totalScore').style.color = 'red';
+                document.getElementById('totalScore').style.fontWeight = 'bold';
+            } else {
+                document.getElementById('totalScore').style.color = '';
+                document.getElementById('totalScore').style.fontWeight = '';
+            }
+        }
+        
+        function validateScore(input, min, max) {
+            const value = parseInt(input.value);
+            
+            if (input.value !== '' && (isNaN(value) || value < min || value > max)) {
+                input.style.borderColor = 'red';
+                input.style.backgroundColor = '#ffe6e6';
+                return false;
+            } else {
+                input.style.borderColor = '#e9ecef';
+                input.style.backgroundColor = '';
+                return true;
+            }
+        }
+        
+        function validateAllScores() {
+            const creativity = document.getElementById('creativity');
+            const difficulty = document.getElementById('difficulty');
+            const effectiveness = document.getElementById('effectiveness');
+            const spreadability = document.getElementById('spreadability');
+            const contribution = document.getElementById('contribution');
+            
+            let isValid = true;
+            
+            // 각 항목별 점수 검증
+            if (!validateScore(creativity, 18, 30)) isValid = false;
+            if (!validateScore(difficulty, 18, 30)) isValid = false;
+            if (!validateScore(effectiveness, 12, 20)) isValid = false;
+            if (!validateScore(spreadability, 6, 10)) isValid = false;
+            if (!validateScore(contribution, 6, 10)) isValid = false;
+            
+            // 빈 값 검증
+            if (!creativity.value || !difficulty.value || !effectiveness.value || 
+                !spreadability.value || !contribution.value) {
+                showAlert('모든 항목에 점수를 입력해주세요.');
+                return false;
+            }
+            
+            // 총점 검증
+            const total = parseInt(creativity.value) + parseInt(difficulty.value) + 
+                         parseInt(effectiveness.value) + parseInt(spreadability.value) + 
+                         parseInt(contribution.value);
+            
+            if (total > 100) {
+                showAlert('총점이 100점을 초과할 수 없습니다. 현재 총점: ' + total + '점');
+                return false;
+            }
+            
+            if (!isValid) {
+                showAlert('점수 범위를 확인해주세요.\n창의성: 18~30점\n난이도: 18~30점\n효과성: 12~20점\n전파성: 6~10점\n기여도: 6~10점');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function previousEvaluation() {
+            if (currentPage > 0) {
+                // 현재 페이지가 1페이지가 아닌 경우 이전 페이지로
+                saveCurrentEvaluation();
+                currentPage--;
+                updateEvaluationPage();
+            } else {
+                // 현재 페이지가 1페이지인 경우 평가자 정보 입력 화면으로
+                document.getElementById('evaluationArea').classList.add('hidden');
+                document.getElementById('evaluatorLogin').classList.remove('hidden');
+            }
+        }
+        
+        function nextEvaluation() {
+            if (currentPage < evaluations.length - 1) {
+                if (!validateAllScores()) {
+                    return;
+                }
+                saveCurrentEvaluation();
+                currentPage++;
+                updateEvaluationPage();
+            }
+        }
+        
+        function showPreview() {
+            if (!validateAllScores()) {
+                return;
+            }
+            
+            saveCurrentEvaluation();
+            
+            // 미리보기 내용 생성
+            const previewContent = document.getElementById('previewContent');
+            previewContent.innerHTML = '';
+            
+            // 평가자 정보 표시
+            const evaluatorInfo = document.createElement('div');
+            evaluatorInfo.className = 'evaluation-item';
+            evaluatorInfo.style.backgroundColor = '#e3f2fd';
+            evaluatorInfo.style.marginBottom = '20px';
+            evaluatorInfo.innerHTML = `
+                <div style="width: 100%;">
+                    <h4 style="margin-bottom: 10px; color: #1976d2;">평가자 정보</h4>
+                    <p><strong>구분:</strong> ${currentEvaluator.type === 'executive' ? '임원' : '직원'}</p>
+                    <p><strong>성명/직위:</strong> ${currentEvaluator.name}</p>
+                    ${currentEvaluator.type === 'employee' ? `<p><strong>소속:</strong> ${currentEvaluator.dept}</p>` : ''}
+                </div>
+            `;
+            previewContent.appendChild(evaluatorInfo);
+            
+            // 각 부서별 평가 결과 표시
+            evaluations.forEach((evaluation, index) => {
+                const card = document.createElement('div');
+                card.className = 'evaluation-item';
+                card.style.flexDirection = 'column';
+                card.style.alignItems = 'flex-start';
+                card.innerHTML = `
+                    <h4 style="margin-bottom: 15px; color: #333;">${index + 1}. ${evaluation.department}</h4>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%;">
+                        <div>창의성: <strong>${evaluation.creativity}점</strong></div>
+                        <div>난이도: <strong>${evaluation.difficulty}점</strong></div>
+                        <div>효과성: <strong>${evaluation.effectiveness}점</strong></div>
+                        <div>전파성: <strong>${evaluation.spreadability}점</strong></div>
+                        <div>기여도: <strong>${evaluation.contribution}점</strong></div>
+                        <div style="grid-column: span 2; text-align: center; font-size: 1.2em; color: #28a745; font-weight: bold; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+                            총점: ${evaluation.total}점
+                        </div>
+                    </div>
+                `;
+                previewContent.appendChild(card);
+            });
+            
+            // 화면 전환
+            document.getElementById('evaluationArea').classList.add('hidden');
+            document.getElementById('previewArea').classList.remove('hidden');
+        }
+        
+        function returnToEvaluation() {
+            // 미리보기에서 평가 화면으로 돌아가기 (마지막 페이지로)
+            document.getElementById('previewArea').classList.add('hidden');
+            document.getElementById('evaluationArea').classList.remove('hidden');
+            currentPage = evaluations.length - 1;
+            updateEvaluationPage();
+        }
+        
+        function finalSubmission() {
+    const evaluationData = {
+        evaluator: currentEvaluator,
+        evaluations: evaluations,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Firebase에 저장
+    const database = window.firebaseDB;
+    const evaluationsRef = ref(database, 'evaluations');
+    push(evaluationsRef, evaluationData);
+    
+    if (!allEvaluations) {
+        allEvaluations = [];
+    }
+    allEvaluations.push(evaluationData);
+    
+    // 완료된 평가자 목록에 추가
+    const evaluatorKey = currentEvaluator.type === 'executive' ? 
+        currentEvaluator.dept : 
+        `${currentEvaluator.name}_${currentEvaluator.dept}`;
+    completedEvaluators.push(evaluatorKey);
+    
+    // 모든 섹션 숨기기
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // 감사 화면만 표시
+    document.getElementById('thankYouScreen').classList.add('active');
+    
+    // 변수 초기화
+    currentEvaluator = null;
+    currentPage = 0;
+    evaluations = [];
+    
+    // 평가자 입력 폼도 초기화
+    resetEvaluatorForm();
+}
+        
+        function resetEvaluatorForm() {
+            // 평가자 정보 입력 폼 초기화
+            document.getElementById('evaluatorType').value = '';
+            document.getElementById('evaluatorPosition').value = '';
+            document.getElementById('evaluatorName').value = '';
+            document.getElementById('evaluatorDept').value = '';
+            updateDepartmentOptions();
+            
+            // 모든 평가 관련 화면 숨기기
+            document.getElementById('evaluationArea').classList.add('hidden');
+            document.getElementById('previewArea').classList.add('hidden');
+            document.getElementById('thankYouArea').classList.add('hidden');
+            
+            // 평가자 로그인 화면만 보이기
+            document.getElementById('evaluatorLogin').classList.remove('hidden');
+        }
+        
+        function submitAllEvaluations() {
+            if (!validateAllScores()) {
+                return;
+            }
+            
+            saveCurrentEvaluation();
+            
+            const evaluationData = {
+                evaluator: currentEvaluator,
+                evaluations: evaluations,
+                timestamp: new Date().toISOString()
+            };
+            
+            if (!allEvaluations) {
+                allEvaluations = [];
+            }
+            allEvaluations.push(evaluationData);
+            
+            showAlert('평가가 완료되었습니다!');
+            
+            document.getElementById('evaluationArea').classList.add('hidden');
+            document.getElementById('evaluatorLogin').classList.remove('hidden');
+            document.getElementById('evaluatorType').value = '';
+            document.getElementById('evaluatorName').value = '';
+            document.getElementById('evaluatorPosition').value = '';
+            document.getElementById('evaluatorDept').value = '';
+            updateDepartmentOptions();
+        }
+        
+        function refreshStatus() {
+            updateExecutiveStatus();
+            updateEmployeeStatus();
+        }
+        
+       // 관리자 모드에서 Firebase 데이터 로드
+function loadFirebaseData() {
+    const database = window.firebaseDB;
+    const evaluationsRef = ref(database, 'evaluations');
+    
+    onValue(evaluationsRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            allEvaluations = Object.values(data);
+            // 완료된 평가자 목록 재구성
+            completedEvaluators = [];
+            allEvaluations.forEach(evalData => {
+                const evaluatorKey = evalData.evaluator.type === 'executive' ? 
+                    evalData.evaluator.dept : 
+                    `${evalData.evaluator.name}_${evalData.evaluator.dept}`;
+                completedEvaluators.push(evaluatorKey);
+            });
+        } else {
+            allEvaluations = [];
+            completedEvaluators = [];
+        }
+        
+        // 관리자 화면 업데이트
+        if (isAdminMode) {
+            refreshStatus();
+        }
+    });
+}
+
+        function updateExecutiveStatus() {
+            const container = document.getElementById('executiveStatus');
+            container.innerHTML = '';
+            
+            executives.forEach(exec => {
+                const completed = allEvaluations && allEvaluations.some(e => e.evaluator.type === 'executive' && e.evaluator.dept === exec.name);
+                const card = document.createElement('div');
+                card.className = `status-card ${completed ? 'status-complete' : 'status-incomplete'}`;
+                card.innerHTML = `
+                    <div>${exec.name}</div>
+                    <div>${completed ? '완료' : '미완료'}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function updateEmployeeStatus() {
+            const container = document.getElementById('employeeStatus');
+            container.innerHTML = '';
+            
+            allDepartments.forEach(dept => {
+                const evaluations = allEvaluations ? allEvaluations.filter(e => e.evaluator.type === 'employee' && e.evaluator.dept === dept) : [];
+                const card = document.createElement('div');
+                card.className = `status-card ${evaluations.length >= 2 ? 'status-complete' : 'status-incomplete'}`;
+                card.innerHTML = `
+                    <div>${dept}</div>
+                    <div>${evaluations.length}/2 완료</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function calculateResults() {
+            const results = {};
+            
+            departments.forEach(dept => {
+                results[dept] = {
+                    department: dept,
+                    executiveScores: [],
+                    employeeScores: [],
+                    executiveAvg: 0,
+                    employeeAvg: 0,
+                    finalScore: 0
+                };
+            });
+            
+            allEvaluations.forEach(evalData => {
+                evalData.evaluations.forEach(evaluation => {
+                    if (results[evaluation.department]) {
+                        if (evalData.evaluator.type === 'executive') {
+                            results[evaluation.department].executiveScores.push(evaluation.total);
+                        } else {
+                            results[evaluation.department].employeeScores.push(evaluation.total);
+                        }
+                    }
+                });
+            });
+            
+            Object.values(results).forEach(result => {
+                if (result.executiveScores.length > 0) {
+                    result.executiveAvg = result.executiveScores.reduce((a, b) => a + b, 0) / result.executiveScores.length;
+                }
+                if (result.employeeScores.length > 0) {
+                    result.employeeAvg = result.employeeScores.reduce((a, b) => a + b, 0) / result.employeeScores.length;
+                }
+                
+                result.finalScore = (result.executiveAvg * 0.6) + (result.employeeAvg * 0.4);
+            });
+            
+            displayResults(results);
+        }
+        
+        function displayResults(results) {
+            const container = document.getElementById('resultsArea');
+            container.innerHTML = '';
+            
+            // 점수 기준으로 내림차순 정렬
+            const sortedResults = Object.values(results).sort((a, b) => b.finalScore - a.finalScore);
+            
+            sortedResults.forEach((result, index) => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                
+                // 상위 3위에게 특별한 배경색 적용
+                if (index === 0) {
+                    card.style.background = '#FFD700'; // 1위 - 금색
+                } else if (index === 1) {
+                    card.style.background = '#C0C0C0'; // 2위 - 은색
+                } else if (index === 2) {
+                    card.style.background = '#CD7F32'; // 3위 - 동색
+                }
+                
+                card.innerHTML = `
+                    <div style="text-align: center; margin-bottom: 15px;">
+                        <h2 style="font-size: 2em; margin-bottom: 10px; ${index < 3 ? 'color: #333;' : 'color: #007bff;'}">
+                            ${index + 1}위: ${result.department}
+                        </h2>
+                    </div>
+                    <div class="score-detail">
+                        <span>임원 평균</span>
+                        <span>${result.executiveAvg.toFixed(1)}점</span>
+                    </div>
+                    <div class="score-detail">
+                        <span>직원 평균</span>
+                        <span>${result.employeeAvg.toFixed(1)}점</span>
+                    </div>
+                    <div class="score-detail">
+                        <span>임원 반영 (60%)</span>
+                        <span>${(result.executiveAvg * 0.6).toFixed(1)}점</span>
+                    </div>
+                    <div class="score-detail">
+                        <span>직원 반영 (40%)</span>
+                        <span>${(result.employeeAvg * 0.4).toFixed(1)}점</span>
+                    </div>
+                    <div class="final-score">
+                        최종 점수: ${result.finalScore.toFixed(1)}점
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function showFinalRanking() {
+            // 먼저 티저 화면 표시
+            const container = document.getElementById('resultsArea');
+            container.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; min-height: 60vh; text-align: center; cursor: pointer;" onclick="startRankingReveal()">
+                    <div>
+                        <h2 style="font-size: 2.5em; color: #007bff; margin-bottom: 30px; line-height: 1.4;">
+                            과연 2025년도 상반기<br>서시공 어워드 1위를 차지할<br>영광의 주인공은<br>어떤 부서일까요?
+                        </h2>
+                        <div style="margin-top: 40px;">
+                            <div style="display: inline-block; width: 50px; height: 50px; border: 3px solid #007bff; border-top: 3px solid transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                        </div>
+                        <p style="margin-top: 30px; font-size: 1.2em; color: #666;">화면을 클릭하여 순위 발표를 시작하세요!</p>
+                    </div>
+                </div>
+                <style>
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                </style>
+            `;
+        }
+        
+        function startRankingReveal() {
+            // 결과 계산
+            const results = {};
+            
+            departments.forEach(dept => {
+                results[dept] = {
+                    department: dept,
+                    executiveScores: [],
+                    employeeScores: [],
+                    executiveAvg: 0,
+                    employeeAvg: 0,
+                    finalScore: 0
+                };
+            });
+            
+            allEvaluations.forEach(evalData => {
+                evalData.evaluations.forEach(evaluation => {
+                    if (results[evaluation.department]) {
+                        if (evalData.evaluator.type === 'executive') {
+                            results[evaluation.department].executiveScores.push(evaluation.total);
+                        } else {
+                            results[evaluation.department].employeeScores.push(evaluation.total);
+                        }
+                    }
+                });
+            });
+            
+            Object.values(results).forEach(result => {
+                if (result.executiveScores.length > 0) {
+                    result.executiveAvg = result.executiveScores.reduce((a, b) => a + b, 0) / result.executiveScores.length;
+                }
+                if (result.employeeScores.length > 0) {
+                    result.employeeAvg = result.employeeScores.reduce((a, b) => a + b, 0) / result.employeeScores.length;
+                }
+                
+                result.finalScore = (result.executiveAvg * 0.6) + (result.employeeAvg * 0.4);
+            });
+            
+            const sortedResults = Object.values(results).sort((a, b) => b.finalScore - a.finalScore);
+            
+            let currentStep = 0;
+            
+            function showStep() {
+                const container = document.getElementById('resultsArea');
+                
+                switch(currentStep) {
+                    case 0: // 5위~8위 표시
+                        container.innerHTML = `
+                            <div style="text-align: center; cursor: pointer;" onclick="nextStep()">
+                                <h3 style="margin-bottom: 30px; font-size: 2em;">🏆 최종 순위 발표 🏆</h3>
+                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 800px; margin: 0 auto;">
+                                    ${sortedResults.slice(4).map((result, index) => `
+                                        <div class="result-card" style="background: #f8f9fa;">
+                                            <h2 style="text-align: center; margin-bottom: 15px; color: #666;">
+                                                ${index + 5}위: ${result.department}
+                                            </h2>
+                                            <div class="final-score" style="color: #666;">
+                                                ${result.finalScore.toFixed(1)}점
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <p style="margin-top: 30px; font-size: 1.2em; color: #666;">화면을 클릭하여 계속...</p>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 1: // 4위 표시
+                        container.innerHTML = `
+                            <div style="text-align: center; cursor: pointer;" onclick="nextStep()">
+                                <h3 style="margin-bottom: 30px; font-size: 2em;">🥉 4위 발표 🥉</h3>
+                                <div style="max-width: 400px; margin: 0 auto;">
+                                    <div class="result-card" style="background: #e8e8e8; transform: scale(1.1);">
+                                        <h2 style="text-align: center; margin-bottom: 15px; font-size: 2em;">
+                                            4위: ${sortedResults[3].department}
+                                        </h2>
+                                        <div class="final-score" style="font-size: 2em;">
+                                            ${sortedResults[3].finalScore.toFixed(1)}점
+                                        </div>
+                                    </div>
+                                </div>
+                                <p style="margin-top: 30px; font-size: 1.2em; color: #666;">화면을 클릭하여 계속...</p>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 2: // 3위 표시
+                        container.innerHTML = `
+                            <div style="text-align: center; cursor: pointer;" onclick="nextStep()">
+                                <h3 style="margin-bottom: 30px; font-size: 2em;">🥉 3위 발표 🥉</h3>
+                                <div style="max-width: 400px; margin: 0 auto;">
+                                    <div class="result-card" style="background: #CD7F32; color: white; transform: scale(1.1);">
+                                        <h2 style="text-align: center; margin-bottom: 15px; font-size: 2em; color: white;">
+                                            3위: ${sortedResults[2].department}
+                                        </h2>
+                                        <div class="final-score" style="font-size: 2em; background: rgba(255,255,255,0.2);">
+                                            ${sortedResults[2].finalScore.toFixed(1)}점
+                                        </div>
+                                    </div>
+                                </div>
+                                <p style="margin-top: 30px; font-size: 1.2em; color: #666;">화면을 클릭하여 계속...</p>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 3: // 1위 vs 2위 대결 구도 (점수와 순위 숨김, 배경색 통일)
+                        container.innerHTML = `
+                            <div style="text-align: center; cursor: pointer;" onclick="nextStep()">
+                                <h2 style="font-size: 2.5em; color: #007bff; margin-bottom: 50px; line-height: 1.4;">
+                                    과연 최종 1위는<br>어떤 부서일까요?
+                                </h2>
+                                <div style="display: flex; align-items: center; justify-content: center; gap: 50px; max-width: 800px; margin: 0 auto;">
+                                    <div style="flex: 1; text-align: center;">
+                                        <div style="background: #f8f9fa; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                                            <h2 style="font-size: 2.5em; color: #333;">${sortedResults[1].department}</h2>
+                                        </div>
+                                    </div>
+                                    <div style="font-size: 3em; color: #007bff; font-weight: bold;">VS</div>
+                                    <div style="flex: 1; text-align: center;">
+                                        <div style="background: #f8f9fa; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                                            <h2 style="font-size: 2.5em; color: #333;">${sortedResults[0].department}</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p style="margin-top: 50px; font-size: 1.2em; color: #666;">화면을 클릭하여 1위 발표를 확인하세요!</p>
+                            </div>
+                        `;
+                        break;
+                        
+                    case 4: // 1위 최종 발표
+                        container.innerHTML = `
+                            <div style="text-align: center;">
+                                <div style="margin-bottom: 30px;">
+                                    <h1 style="font-size: 4em; color: #FFD700; text-shadow: 3px 3px 6px rgba(0,0,0,0.3); margin-bottom: 20px;">
+                                        🏆 축하합니다! 🏆
+                                    </h1>
+                                    <h2 style="font-size: 3em; color: #007bff; margin-bottom: 30px;">
+                                        2025년도 상반기 서시공 어워드 1위
+                                    </h2>
+                                </div>
+                                <div style="max-width: 600px; margin: 0 auto;">
+                                    <div class="result-card" style="background: linear-gradient(135deg, #FFD700, #FFA500); color: #333; transform: scale(1.2); box-shadow: 0 20px 40px rgba(255, 215, 0, 0.4);">
+                                        <h1 style="text-align: center; margin-bottom: 20px; font-size: 3em; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
+                                            🥇 ${sortedResults[0].department} 🥇
+                                        </h1>
+                                        <div style="font-size: 2.5em; font-weight: bold; background: rgba(255,255,255,0.3); border-radius: 10px; padding: 20px;">
+                                            최종 점수: ${sortedResults[0].finalScore.toFixed(1)}점
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 40px; font-size: 1.5em; color: #666;">
+                                    🎉 상반기 서시공 어워드 1위 수상을 축하드립니다! 🎉
+                                </div>
+                            </div>
+                        `;
+                        break;
+                }
+            }
+            
+            // 전역 함수로 nextStep 정의
+            window.nextStep = function() {
+                currentStep++;
+                if (currentStep <= 4) {
+                    showStep();
+                }
+            };
+            
+            // 첫 번째 단계 시작
+            showStep();
+        }
+        
+        function exportResults() {
+            if (allEvaluations.length === 0) {
+                showAlert('내보낼 데이터가 없습니다.');
+                return;
+            }
+            
+            let csvContent = "평가자구분,평가자명,평가자소속,평가부서,창의성,난이도,효과성,전파성,기여도,총점\n";
+            
+            allEvaluations.forEach(evalData => {
+                evalData.evaluations.forEach(evaluation => {
+                    csvContent += `${evalData.evaluator.type === 'executive' ? '임원' : '직원'},${evalData.evaluator.name},${evalData.evaluator.dept},${evaluation.department},${evaluation.creativity},${evaluation.difficulty},${evaluation.effectiveness},${evaluation.spreadability},${evaluation.contribution},${evaluation.total}\n`;
+                });
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', '평가결과.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        async function resetAllData() {
+    const result = await showConfirm('모든 평가 데이터를 삭제하시겠습니까?');
+    if (result) {
+        // Firebase에서 삭제
+        const database = window.firebaseDB;
+        const evaluationsRef = ref(database, 'evaluations');
+        set(evaluationsRef, null);
+        
+        allEvaluations = [];
+        completedEvaluators = [];
+        showAlert('모든 데이터가 초기화되었습니다.');
+        refreshStatus();
+    }
+}
+        
+        function showDeleteEvaluator() {
+            const deleteSection = document.getElementById('deleteSection');
+            
+            // 현재 보이는 상태라면 숨기기
+            if (!deleteSection.classList.contains('hidden')) {
+                hideDeleteEvaluator();
+                return;
+            }
+            
+            const select = document.getElementById('deleteEvaluatorSelect');
+            select.innerHTML = '<option value="">선택하세요</option>';
+            
+            // 완료된 평가자 목록을 셀렉트 박스에 추가
+            if (allEvaluations && allEvaluations.length > 0) {
+                allEvaluations.forEach((evalData, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    const evaluatorType = evalData.evaluator.type === 'executive' ? '임원' : '직원';
+                    const evaluatorInfo = evalData.evaluator.type === 'executive' ? 
+                        evalData.evaluator.name : 
+                        `${evalData.evaluator.name} (${evalData.evaluator.dept})`;
+                    option.textContent = `${evaluatorType} - ${evaluatorInfo}`;
+                    select.appendChild(option);
+                });
+            }
+            
+            deleteSection.classList.remove('hidden');
+        }
+        
+        function hideDeleteEvaluator() {
+            document.getElementById('deleteSection').classList.add('hidden');
+        }
+        
+        async function deleteSelectedEvaluator() {
+            const selectedIndex = document.getElementById('deleteEvaluatorSelect').value;
+            
+            if (selectedIndex === '') {
+                showAlert('삭제할 평가자를 선택해주세요.');
+                return;
+            }
+            
+            const evalData = allEvaluations[selectedIndex];
+            const evaluatorType = evalData.evaluator.type === 'executive' ? '임원' : '직원';
+            const evaluatorInfo = evalData.evaluator.type === 'executive' ? 
+                evalData.evaluator.name : 
+                `${evalData.evaluator.name} (${evalData.evaluator.dept})`;
+            
+            const result = await showConfirm(`${evaluatorType} - ${evaluatorInfo}의 평가 데이터를 삭제하시겠습니까?`);
+            if (result) {
+                // allEvaluations에서 해당 데이터 삭제
+                allEvaluations.splice(selectedIndex, 1);
+                
+                // completedEvaluators에서도 해당 평가자 제거
+                const evaluatorKey = evalData.evaluator.type === 'executive' ? 
+                    evalData.evaluator.dept : 
+                    `${evalData.evaluator.name}_${evalData.evaluator.dept}`;
+                const keyIndex = completedEvaluators.indexOf(evaluatorKey);
+                if (keyIndex > -1) {
+                    completedEvaluators.splice(keyIndex, 1);
+                }
+                
+                showAlert('선택한 평가자의 데이터가 삭제되었습니다.');
+                hideDeleteEvaluator();
+                refreshStatus();
+            }
+        }
     </script>
 </body>
 </html>
