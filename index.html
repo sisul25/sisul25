@@ -1217,6 +1217,18 @@ document.addEventListener('DOMContentLoaded', function() {
         timestamp: new Date().toISOString()
     };
     
+const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+set(ref(window.firebaseDB, `evaluations/${newKey}`), evaluationData)
+  .then(() => {
+    console.log('✅ 제출 성공');
+    alert('제출이 완료되었습니다!');
+  })
+  .catch((error) => {
+    console.error('❌ 저장 오류:', error);
+    alert('제출 중 문제가 발생했어요. 다시 시도해주세요!');
+  });
+
     // Firebase에 저장
     const database = window.firebaseDB;
     const evaluationsRef = ref(database, 'evaluations');
