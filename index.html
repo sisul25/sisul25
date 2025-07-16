@@ -456,8 +456,7 @@
                         </select>
                     </div>
                     
-                    <button class="btn btn-primary" id="startBtn">평가 시작</button>
-
+                    <button class="btn btn-primary" onclick="startEvaluation()">평가 시작</button>
                 </div>
                 
                 <div id="evaluationArea" class="hidden">
@@ -613,98 +612,28 @@
             </div>
         </div>
     </div>
-    <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+<script type="module">
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getDatabase, ref, set, get, onValue, push } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  databaseURL: "https://sisul2025-default-rtdb.asia-southeast1.firebasedatabase.app"
+  apiKey: "AIzaSyA4SN4u7yc3CZNWuLyt46F_vJG6NXX99v4",
+  authDomain: "sisul2025.firebaseapp.com",
+  databaseURL: "https://sisul2025-default-rtdb.firebaseio.com/", // 이 줄 추가 필요
+  projectId: "sisul2025",
+  storageBucket: "sisul2025.firebasestorage.app",
+  messagingSenderId: "154501251209",
+  appId: "1:154501251209:web:dd814133449122e582c658"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+
+// 전역 변수로 설정
 window.firebaseDB = database;
-
-let completedEvaluators = [];
-let allEvaluations = [];
-
-function loadFirebaseData() {
-  const db = window.firebaseDB;
-  const evaluationsRef = ref(db, 'evaluations');
-
-  onValue(evaluationsRef, (snapshot) => {
-    const data = snapshot.val();
-    completedEvaluators = [];
-    allEvaluations = [];
-
-    if (data) {
-      Object.values(data).forEach(entry => {
-        const evaluator = entry.evaluator;
-        const key = evaluator.type === 'executive'
-          ? evaluator.dept
-          : `${evaluator.name}_${evaluator.dept}`;
-        completedEvaluators.push(key);
-        allEvaluations.push(entry);
-      });
-    }
-
-    console.log('✅ 평가자 목록 로딩 완료:', completedEvaluators);
-
-    if (typeof refreshStatus === 'function' && isAdminMode) {
-      refreshStatus();
-    }
-  });
-}
-
-function finalSubmission() {
-  const evaluationData = {
-    evaluator: currentEvaluator,
-    evaluations: evaluations,
-    timestamp: new Date().toISOString()
-  };
-
-  const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-  const db = window.firebaseDB;
-  const evaluationRef = ref(db, `evaluations/${newKey}`);
-
-  set(evaluationRef, evaluationData)
-    .then(() => {
-      console.log('✅ 제출 성공');
-      alert('제출이 완료되었습니다!');
-      loadFirebaseData(); // 제출 후 평가자 목록 갱신
-    })
-    .catch(error => {
-      console.error('❌ 저장 오류:', error);
-      alert('제출 중 문제가 발생했어요. 다시 시도해주세요!');
-    });
-
-  if (!Array.isArray(allEvaluations)) {
-    allEvaluations = [];
-  }
-  allEvaluations.push(evaluationData);
-
-  const key = currentEvaluator.type === 'executive'
-    ? currentEvaluator.dept
-    : `${currentEvaluator.name}_${currentEvaluator.dept}`;
-  completedEvaluators.push(key);
-
-  currentEvaluator = null;
-  currentPage = 0;
-  evaluations = [];
-
-  document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-  document.getElementById('thankYouScreen').classList.add('active');
-
-  if (typeof resetEvaluatorForm === 'function') {
-    resetEvaluatorForm();
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  if (window.firebaseDB) {
-    loadFirebaseData();
-  }
-});
 </script>
     <script>
         // 기본 데이터 설정
@@ -842,8 +771,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('DOMContentLoaded', function() {
             // 관리자 모드 확인
             checkAdminMode();
-            
-// DOM 로드 후 이벤트 리스너 등록
+            // DOM 로드 후 이벤트 리스너 등록
 document.addEventListener('DOMContentLoaded', function() {
     // 관리자 모드 확인
     checkAdminMode();
@@ -1051,10 +979,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // 중복 평가 체크
             const evaluatorKey = type === 'executive' ? dept : `${name}_${dept}`;
-            if (completedEvaluators.length > 0 && completedEvaluators.includes(evaluatorKey)) {
-  showAlert('이미 평가를 완료하셨습니다.\n중복 평가는 불가능합니다.');
-  return;
-}
+            if (completedEvaluators.includes(evaluatorKey)) {
+                showAlert('이미 평가를 완료하셨습니다.\n중복 평가는 불가능합니다.');
+                return;
+            }
             
             currentEvaluator = { type, name, dept };
             
@@ -1281,7 +1209,45 @@ document.addEventListener('DOMContentLoaded', function() {
             updateEvaluationPage();
         }
         
-        
+        function finalSubmission() {
+    const evaluationData = {
+        evaluator: currentEvaluator,
+        evaluations: evaluations,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Firebase에 저장
+    const database = window.firebaseDB;
+    const evaluationsRef = ref(database, 'evaluations');
+    push(evaluationsRef, evaluationData);
+    
+    if (!allEvaluations) {
+        allEvaluations = [];
+    }
+    allEvaluations.push(evaluationData);
+    
+    // 완료된 평가자 목록에 추가
+    const evaluatorKey = currentEvaluator.type === 'executive' ? 
+        currentEvaluator.dept : 
+        `${currentEvaluator.name}_${currentEvaluator.dept}`;
+    completedEvaluators.push(evaluatorKey);
+    
+    // 모든 섹션 숨기기
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // 감사 화면만 표시
+    document.getElementById('thankYouScreen').classList.add('active');
+    
+    // 변수 초기화
+    currentEvaluator = null;
+    currentPage = 0;
+    evaluations = [];
+    
+    // 평가자 입력 폼도 초기화
+    resetEvaluatorForm();
+}
         
         function resetEvaluatorForm() {
             // 평가자 정보 입력 폼 초기화
@@ -1329,12 +1295,30 @@ document.addEventListener('DOMContentLoaded', function() {
             updateDepartmentOptions();
         }
         
+       // 관리자 모드에서 Firebase 데이터 로드
+
+
         function refreshStatus() {
             updateExecutiveStatus();
             updateEmployeeStatus();
         }
         
-       // 관리자 모드에서 Firebase 데이터 로드
+        function updateExecutiveStatus() {
+            const container = document.getElementById('executiveStatus');
+            container.innerHTML = '';
+            
+            executives.forEach(exec => {
+                const completed = allEvaluations && allEvaluations.some(e => e.evaluator.type === 'executive' && e.evaluator.dept === exec.name);
+                const card = document.createElement('div');
+                card.className = `status-card ${completed ? 'status-complete' : 'status-incomplete'}`;
+                card.innerHTML = `
+                    <div>${exec.name}</div>
+                    <div>${completed ? '완료' : '미완료'}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
 function loadFirebaseData() {
     const database = window.firebaseDB;
     const evaluationsRef = ref(database, 'evaluations');
@@ -1363,22 +1347,6 @@ function loadFirebaseData() {
     });
 }
 
-        function updateExecutiveStatus() {
-            const container = document.getElementById('executiveStatus');
-            container.innerHTML = '';
-            
-            executives.forEach(exec => {
-                const completed = allEvaluations && allEvaluations.some(e => e.evaluator.type === 'executive' && e.evaluator.dept === exec.name);
-                const card = document.createElement('div');
-                card.className = `status-card ${completed ? 'status-complete' : 'status-incomplete'}`;
-                card.innerHTML = `
-                    <div>${exec.name}</div>
-                    <div>${completed ? '완료' : '미완료'}</div>
-                `;
-                container.appendChild(card);
-            });
-        }
-        
         function updateEmployeeStatus() {
             const container = document.getElementById('employeeStatus');
             container.innerHTML = '';
