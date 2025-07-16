@@ -635,21 +635,21 @@ function loadFirebaseData() {
   onValue(evaluationsRef, (snapshot) => {
     const data = snapshot.val();
     completedEvaluators = [];
+    allEvaluations = [];
 
     if (data) {
-      allEvaluations = Object.values(data);
-      allEvaluations.forEach(entry => {
+      Object.values(data).forEach(entry => {
         const evaluator = entry.evaluator;
         const key = evaluator.type === 'executive'
           ? evaluator.dept
           : `${evaluator.name}_${evaluator.dept}`;
         completedEvaluators.push(key);
+        allEvaluations.push(entry);
       });
-    } else {
-      allEvaluations = [];
     }
 
     console.log('✅ 평가자 목록 로딩 완료:', completedEvaluators);
+
     if (typeof refreshStatus === 'function' && isAdminMode) {
       refreshStatus();
     }
@@ -671,14 +671,14 @@ function finalSubmission() {
     .then(() => {
       console.log('✅ 제출 성공');
       alert('제출이 완료되었습니다!');
-      loadFirebaseData(); // 🔄 제출 후 데이터 반영
+      loadFirebaseData(); // 제출 후 평가자 목록 갱신
     })
     .catch(error => {
       console.error('❌ 저장 오류:', error);
       alert('제출 중 문제가 발생했어요. 다시 시도해주세요!');
     });
 
-  if (!allEvaluations) {
+  if (!Array.isArray(allEvaluations)) {
     allEvaluations = [];
   }
   allEvaluations.push(evaluationData);
@@ -694,6 +694,7 @@ function finalSubmission() {
 
   document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
   document.getElementById('thankYouScreen').classList.add('active');
+
   if (typeof resetEvaluatorForm === 'function') {
     resetEvaluatorForm();
   }
@@ -701,7 +702,7 @@ function finalSubmission() {
 
 document.addEventListener('DOMContentLoaded', () => {
   if (window.firebaseDB) {
-    loadFirebaseData(); // ✅ 페이지 로드 시 평가자 목록 자동 반영
+    loadFirebaseData();
   }
 });
 </script>
