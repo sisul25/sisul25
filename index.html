@@ -1050,10 +1050,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // 중복 평가 체크
             const evaluatorKey = type === 'executive' ? dept : `${name}_${dept}`;
-            if (completedEvaluators.includes(evaluatorKey)) {
-                showAlert('이미 평가를 완료하셨습니다.\n중복 평가는 불가능합니다.');
-                return;
-            }
+            if (completedEvaluators.length > 0 && completedEvaluators.includes(evaluatorKey)) {
+  showAlert('이미 평가를 완료하셨습니다.\n중복 평가는 불가능합니다.');
+  return;
+}
             
             currentEvaluator = { type, name, dept };
             
