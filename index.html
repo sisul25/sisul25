@@ -615,7 +615,7 @@
 <script type="module">
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import { getDatabase, ref, set, get, onValue, push } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -767,10 +767,8 @@ window.firebaseDB = database;
             }
         }
         
-        // DOM 로드 후 이벤트 리스너 등록
-        document.addEventListener('DOMContentLoaded', function() {
-            // 관리자 모드 확인
-            checkAdminMode();
+       
+        
             // DOM 로드 후 이벤트 리스너 등록
 document.addEventListener('DOMContentLoaded', function() {
     // 관리자 모드 확인
@@ -781,9 +779,7 @@ document.addEventListener('DOMContentLoaded', function() {
         loadFirebaseData();
     }
     
-    // 나머지 코드는 그대로...
-});
-            document.getElementById('evaluatorType').addEventListener('change', updateDepartmentOptions);
+    document.getElementById('evaluatorType').addEventListener('change', updateDepartmentOptions);
             
             const scoreInputs = ['creativity', 'difficulty', 'effectiveness', 'spreadability', 'contribution'];
             scoreInputs.forEach(id => {
@@ -1219,7 +1215,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Firebase에 저장
     const database = window.firebaseDB;
     const evaluationsRef = ref(database, 'evaluations');
-    push(evaluationsRef, evaluationData);
+    const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+set(ref(database, `evaluations/${newKey}`), evaluationData);
     
     if (!allEvaluations) {
         allEvaluations = [];
