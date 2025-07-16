@@ -1220,7 +1220,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Firebase에 저장
     const database = window.firebaseDB;
     const evaluationsRef = ref(database, 'evaluations');
-    push(evaluationsRef, evaluationData);
+    const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+set(ref(database, `evaluations/${newKey}`), evaluationData);
     
     if (!allEvaluations) {
         allEvaluations = [];
