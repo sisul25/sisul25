@@ -614,83 +614,91 @@
         </div>
     </div>
     <script type="module">
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import { getDatabase, ref, set, get, onValue, push } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA4SN4u7yc3CZNWuLyt46F_vJG6NXX99v4",
-  authDomain: "sisul2025.firebaseapp.com",
-  databaseURL: "https://sisul2025-default-rtdb.asia-southeast1.firebasedatabase.app", // 이 줄 추가 필요
-  projectId: "sisul2025",
-  storageBucket: "sisul2025.firebasestorage.app",
-  messagingSenderId: "154501251209",
-  appId: "1:154501251209:web:dd814133449122e582c658"
+  databaseURL: "https://sisul2025-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-
-// 전역 변수로 설정
 window.firebaseDB = database;
-document.getElementById('startBtn').addEventListener('click', startEvaluation)
 
-window.finalSubmission = function()  {
-    const evaluationData = {
-        evaluator: currentEvaluator,
-        evaluations: evaluations,
-        timestamp: new Date().toISOString()
-    };
-    
-const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+let completedEvaluators = [];
+let allEvaluations = [];
 
-set(ref(window.firebaseDB, `evaluations/${newKey}`), evaluationData)
-  .then(() => {
-    console.log('✅ 제출 성공');
-    alert('제출이 완료되었습니다!');
-  })
-  .catch((error) => {
-    console.error('❌ 저장 오류:', error);
-    alert('제출 중 문제가 발생했어요. 다시 시도해주세요!');
-  });
+function loadFirebaseData() {
+  const db = window.firebaseDB;
+  const evaluationsRef = ref(db, 'evaluations');
 
-/*
-    // Firebase에 저장
-    const database = window.firebaseDB;
-    const evaluationsRef = ref(database, 'evaluations');
-    const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-set(ref(database, `evaluations/${newKey}`), evaluationData);
-*/
+  onValue(evaluationsRef, (snapshot) => {
+    const data = snapshot.val();
+    completedEvaluators = [];
 
-    if (!allEvaluations) {
-        allEvaluations = [];
+    if (data) {
+      Object.values(data).forEach(entry => {
+        const evaluator = entry.evaluator;
+        const key = evaluator.type === 'executive'
+          ? evaluator.dept
+          : `${evaluator.name}_${evaluator.dept}`;
+        completedEvaluators.push(key);
+      });
     }
-    allEvaluations.push(evaluationData);
-    
-    // 완료된 평가자 목록에 추가
-    const evaluatorKey = currentEvaluator.type === 'executive' ? 
-        currentEvaluator.dept : 
-        `${currentEvaluator.name}_${currentEvaluator.dept}`;
-    completedEvaluators.push(evaluatorKey);
-    
-    // 모든 섹션 숨기기
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active');
-    });
-    
-    // 감사 화면만 표시
-    document.getElementById('thankYouScreen').classList.add('active');
-    
-    // 변수 초기화
-    currentEvaluator = null;
-    currentPage = 0;
-    evaluations = [];
-    
-    // 평가자 입력 폼도 초기화
-    resetEvaluatorForm();
+
+    console.log('✅ 평가자 목록 로딩 완료:', completedEvaluators);
+    if (isAdminMode) {
+      refreshStatus();
+    }
+  });
 }
+
+function finalSubmission() {
+  const evaluationData = {
+    evaluator: currentEvaluator,
+    evaluations: evaluations,
+    timestamp: new Date().toISOString()
+  };
+
+  const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  const db = window.firebaseDB;
+  const evaluationRef = ref(db, `evaluations/${newKey}`);
+
+  set(evaluationRef, evaluationData)
+    .then(() => {
+      console.log('✅ 제출 성공');
+      alert('제출이 완료되었습니다!');
+      loadFirebaseData(); // 제출 후 평가자 목록 갱신
+    })
+    .catch(error => {
+      console.error('❌ 저장 오류:', error);
+      alert('제출 중 문제가 발생했어요. 다시 시도해주세요!');
+    });
+
+  if (!allEvaluations) {
+    allEvaluations = [];
+  }
+  allEvaluations.push(evaluationData);
+
+  const key = currentEvaluator.type === 'executive'
+    ? currentEvaluator.dept
+    : `${currentEvaluator.name}_${currentEvaluator.dept}`;
+  completedEvaluators.push(key);
+
+  currentEvaluator = null;
+  currentPage = 0;
+  evaluations = [];
+
+  document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+  document.getElementById('thankYouScreen').classList.add('active');
+  resetEvaluatorForm();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.firebaseDB) {
+    loadFirebaseData(); // ✅ 새로고침 시 평가자 목록 자동 로딩
+  }
+});
 </script>
     <script>
         // 기본 데이터 설정
