@@ -1725,16 +1725,32 @@ window.firebasePush = push;
     
     const result = await showConfirm(`${evaluatorType} - ${evaluatorInfo}의 평가 데이터를 삭제하시겠습니까?`);
     if (result) {
-        allEvaluations.splice(selectedIndex, 1);
-        
-        const evaluatorKey = evalData.evaluator.type === 'executive' ? 
-            evalData.evaluator.dept : 
-            `${evalData.evaluator.name}_${evalData.evaluator.dept}`;
-        const keyIndex = completedEvaluators.indexOf(evaluatorKey);
-        if (keyIndex > -1) {
-            completedEvaluators.splice(keyIndex, 1);
-        }
-        
+    // Firebase에서 모든 데이터 삭제 후 재저장
+    if (window.firebaseDB) {
+        const evaluationsRef = window.firebaseRef(window.firebaseDB, 'evaluations');
+        window.firebaseSet(evaluationsRef, null);
+    }
+    
+    // allEvaluations에서 해당 데이터 삭제
+    allEvaluations.splice(selectedIndex, 1);
+    
+    // Firebase에 남은 데이터들 다시 저장
+    if (window.firebaseDB) {
+        allEvaluations.forEach((data, index) => {
+            const newKey = Date.now() + '_' + index;
+            window.firebaseSet(window.firebaseRef(window.firebaseDB, `evaluations/${newKey}`), data);
+        });
+    }
+    
+    // completedEvaluators에서도 해당 평가자 제거
+    const evaluatorKey = evalData.evaluator.type === 'executive' ? 
+        evalData.evaluator.dept : 
+        `${evalData.evaluator.name}_${evalData.evaluator.dept}`;
+    const keyIndex = completedEvaluators.indexOf(evaluatorKey);
+    if (keyIndex > -1) {
+        completedEvaluators.splice(keyIndex, 1);
+    }
+    
         showAlert('선택한 평가자의 데이터가 삭제되었습니다.');
         hideDeleteEvaluator();
         refreshStatus();
