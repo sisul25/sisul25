@@ -636,6 +636,61 @@ const database = getDatabase(app);
 // 전역 변수로 설정
 window.firebaseDB = database;
 document.getElementById('startBtn').addEventListener('click', startEvaluation)
+
+window.finalSubmission = function()  {
+    const evaluationData = {
+        evaluator: currentEvaluator,
+        evaluations: evaluations,
+        timestamp: new Date().toISOString()
+    };
+    
+const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+set(ref(window.firebaseDB, `evaluations/${newKey}`), evaluationData)
+  .then(() => {
+    console.log('✅ 제출 성공');
+    alert('제출이 완료되었습니다!');
+  })
+  .catch((error) => {
+    console.error('❌ 저장 오류:', error);
+    alert('제출 중 문제가 발생했어요. 다시 시도해주세요!');
+  });
+
+/*
+    // Firebase에 저장
+    const database = window.firebaseDB;
+    const evaluationsRef = ref(database, 'evaluations');
+    const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+set(ref(database, `evaluations/${newKey}`), evaluationData);
+*/
+
+    if (!allEvaluations) {
+        allEvaluations = [];
+    }
+    allEvaluations.push(evaluationData);
+    
+    // 완료된 평가자 목록에 추가
+    const evaluatorKey = currentEvaluator.type === 'executive' ? 
+        currentEvaluator.dept : 
+        `${currentEvaluator.name}_${currentEvaluator.dept}`;
+    completedEvaluators.push(evaluatorKey);
+    
+    // 모든 섹션 숨기기
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // 감사 화면만 표시
+    document.getElementById('thankYouScreen').classList.add('active');
+    
+    // 변수 초기화
+    currentEvaluator = null;
+    currentPage = 0;
+    evaluations = [];
+    
+    // 평가자 입력 폼도 초기화
+    resetEvaluatorForm();
+}
 </script>
     <script>
         // 기본 데이터 설정
@@ -1212,60 +1267,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateEvaluationPage();
         }
         
-        window.finalSubmission = function()  {
-    const evaluationData = {
-        evaluator: currentEvaluator,
-        evaluations: evaluations,
-        timestamp: new Date().toISOString()
-    };
-    
-const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-
-set(ref(window.firebaseDB, `evaluations/${newKey}`), evaluationData)
-  .then(() => {
-    console.log('✅ 제출 성공');
-    alert('제출이 완료되었습니다!');
-  })
-  .catch((error) => {
-    console.error('❌ 저장 오류:', error);
-    alert('제출 중 문제가 발생했어요. 다시 시도해주세요!');
-  });
-
-/*
-    // Firebase에 저장
-    const database = window.firebaseDB;
-    const evaluationsRef = ref(database, 'evaluations');
-    const newKey = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-set(ref(database, `evaluations/${newKey}`), evaluationData);
-*/
-
-    if (!allEvaluations) {
-        allEvaluations = [];
-    }
-    allEvaluations.push(evaluationData);
-    
-    // 완료된 평가자 목록에 추가
-    const evaluatorKey = currentEvaluator.type === 'executive' ? 
-        currentEvaluator.dept : 
-        `${currentEvaluator.name}_${currentEvaluator.dept}`;
-    completedEvaluators.push(evaluatorKey);
-    
-    // 모든 섹션 숨기기
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active');
-    });
-    
-    // 감사 화면만 표시
-    document.getElementById('thankYouScreen').classList.add('active');
-    
-    // 변수 초기화
-    currentEvaluator = null;
-    currentPage = 0;
-    evaluations = [];
-    
-    // 평가자 입력 폼도 초기화
-    resetEvaluatorForm();
-}
+        
         
         function resetEvaluatorForm() {
             // 평가자 정보 입력 폼 초기화
