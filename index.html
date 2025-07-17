@@ -1663,14 +1663,21 @@ window.firebasePush = push;
         async function resetAllData() {
     const result = await showConfirm('모든 평가 데이터를 삭제하시겠습니까?');
     if (result) {
-        // Firebase에서 삭제 추가!
+        // Firebase에서 삭제
         if (window.firebaseDB) {
-            const evaluationsRef = window.firebaseRef(window.firebaseDB, 'evaluations');
-            window.firebaseSet(evaluationsRef, null);
+            try {
+                const evaluationsRef = window.firebaseRef(window.firebaseDB, 'evaluations');
+                await window.firebaseSet(evaluationsRef, null);
+                console.log('Firebase 데이터 삭제 완료');
+            } catch (error) {
+                console.error('Firebase 삭제 오류:', error);
+            }
         }
         
+        // 로컬 데이터 삭제
         allEvaluations = [];
         completedEvaluators = [];
+        
         showAlert('모든 데이터가 초기화되었습니다.');
         refreshStatus();
     }
